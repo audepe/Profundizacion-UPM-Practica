@@ -4,6 +4,7 @@ var http = require('http');
 var path = require("path");
 var bodyParser = require('body-parser');
 var rateLimit = require("express-rate-limit");
+var fs = require('fs');
 
 var app = express();
 var server = http.createServer(app);
@@ -13,12 +14,10 @@ const limiter = rateLimit({
   max: 100 // limit each IP to 100 requests per windowMs
 });
 
-const conector = mysql.createConnection({
-    host: "profdb.cpok8xhoiqya.us-east-1.rds.amazonaws.com",
-    port: "3306",
-    user: "root",
-    password: "profundizacion"
-  });
+
+let rawdata = fs.readFileSync('db-config.json');
+let connect_data = JSON.parse(rawdata);
+const conector = mysql.createConnection(connect_data);
 
   conector.connect(function(err) {
     if (err) throw err;
@@ -35,10 +34,10 @@ app.get('/', function(req,res){
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`App escuchando en http://localhost:${port}`)
 })
 
 // Add
 app.post('/add_to_check_list', function(req,res){
-    console.log("Perro");
+    console.log("Add intentado");
 });
