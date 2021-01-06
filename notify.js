@@ -4,7 +4,7 @@ function createFromTemplate(url) {
   return `Pagina ${url} ha cambiado`;
 }
 
-function notify(email, url) {
+export function notify(email, url) {
   var transporter = nodemailer.createTransport({
     name: "monitor-tu-pagina.com",
     host: "smtp.ethereal.email",
